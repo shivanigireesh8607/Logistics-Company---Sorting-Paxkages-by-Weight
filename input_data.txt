@@ -1,0 +1,15 @@
+Package Weights (input order):
+20 15 20 10 15 20 25 10
+
+Assigned Package IDs (based on arrival order):
+P1 P2 P3 P4 P5 P6 P7 P8
+
+Meaning:
+P1: weight 20
+P2: weight 15
+P3: weight 20
+P4: weight 10
+P5: weight 15
+P6: weight 20
+P7: weight 25
+P8: weight 10
