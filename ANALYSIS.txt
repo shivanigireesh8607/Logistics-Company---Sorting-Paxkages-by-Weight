@@ -1,0 +1,112 @@
+===============================================================
+DSA Assignment 2 - Question 10
+Analysis Report
+Logistics Company - Sorting Packages by Weight
+===============================================================
+
+1. PROBLEM SUMMARY
+------------------
+Package weights: 20, 15, 20, 10, 15, 20, 25, 10
+Assigned unique Package IDs (based on arrival/input order):
+  P1(20), P2(15), P3(20), P4(10), P5(15), P6(20), P7(25), P8(10)
+
+Goal:
+a) Sort by weight using Merge Sort and Quick Sort; show intermediate steps.
+b) Ensure packages with same weight keep original relative order (stability).
+c) Compare the algorithms and recommend the suitable one for stability.
+
+2. EXECUTION RESULTS (Summary)
+------------------------------
+Merge Sort Final Output (STABLE):
+  (P4,10) (P8,10) (P2,15) (P5,15) (P1,20) (P3,20) (P6,20) (P7,25)
+
+Quick Sort Final Output (UNSTABLE):
+  (P8,10) (P4,10) (P5,15) (P2,15) (P1,20) (P3,20) (P6,20) (P7,25)
+
+Observation on equal weights:
+- Weight 10: Merge keeps P4 before P8 (original order)
+             Quick puts P8 before P4 (order reversed)
+- Weight 15: Merge keeps P2 before P5
+             Quick puts P5 before P2 (order reversed)
+- Weight 20: Both keep P1, P3, P6 in original order in this run
+             (Quick can change order depending on pivot choices)
+
+3. ANALYSIS OF THE TWO SORTING METHODS
+---------------------------------------
+
+A. Duplicate Values
+   - Both algorithms correctly group equal weights together.
+   - Merge Sort preserves the original sequence among duplicates.
+   - Quick Sort (with last-element pivot and strict < comparison)
+     does not guarantee preservation of order among equals.
+
+B. Stability
+   - Merge Sort : STABLE
+     Reason: In the merge step we use <= comparison.
+     When two elements have equal weight, the one from the left
+     subarray (which appeared earlier in the original array) is
+     taken first.
+   - Quick Sort : UNSTABLE (standard implementation)
+     Reason: Partitioning swaps elements based only on weight.
+     Equal elements can be moved across the pivot in either order.
+
+C. Number of Comparisons / Major Operations (observed on n=8)
+   - Merge Sort : ~16 comparisons (during merge steps)
+   - Quick Sort : ~18 comparisons + 8 swaps
+   Note: These numbers are for this small input. Actual counts
+   vary with implementation details and pivot selection.
+
+D. Time Complexity
+   Algorithm     | Best Case     | Average Case  | Worst Case
+   --------------|---------------|---------------|---------------
+   Merge Sort    | O(n log n)    | O(n log n)    | O(n log n)
+   Quick Sort    | O(n log n)    | O(n log n)    | O(n^2)
+
+   - Merge Sort is always O(n log n) regardless of input order.
+   - Quick Sort is O(n log n) on average but degrades to O(n^2)
+     when the array is already sorted or reverse sorted
+     (with poor pivot choice). Randomized or median-of-three
+     pivot selection reduces the chance of worst case.
+
+E. Space Complexity
+   - Merge Sort : O(n) extra space for the temporary arrays used
+                  during merging. Recursive stack depth O(log n).
+   - Quick Sort : O(log n) average (recursion stack). Can become
+                  O(n) in the worst case. In-place sorting
+                  (only a few variables extra).
+
+4. WHICH ALGORITHM IS MORE SUITABLE?
+------------------------------------
+When maintaining the original order of equal-weight packages
+is important (i.e., stability is required):
+
+>>> Merge Sort is the clear choice. <<<
+
+Reasons:
+1. It is inherently stable when implemented with <= in the merge.
+2. Guaranteed O(n log n) time – predictable performance even as
+   the number of packages grows.
+3. The extra O(n) space is acceptable for most logistics systems
+   (memory is cheap compared with correctness of order).
+4. Quick Sort would require additional modifications (e.g.,
+   making the comparison consider original index as a
+   secondary key, or using a stable partition) which complicates
+   the code and may increase constants.
+
+Recommendation for the logistics company:
+Use Merge Sort (or any other stable sort such as Timsort) when
+packages of equal weight must keep their relative arrival order.
+
+5. HOW TO REPRODUCE
+-------------------
+Compile and run:
+  gcc -o package_sort package_sort.c
+  ./package_sort
+
+Full intermediate steps, comparison counts and stability
+verification are printed by the program.
+See output.txt for a captured run.
+
+===============================================================
+End of Analysis
+===============================================================
