@@ -1,0 +1,92 @@
+====================================================
+  DSA Assignment 2 - Question 10
+  Logistics Package Sorting by Weight
+====================================================
+Input Packages (Weight, ID):
+Data: (P1,20) (P2,15) (P3,20) (P4,10) (P5,15) (P6,20) (P7,25) (P8,10) 
+
+========== MERGE SORT ==========
+Initial: (P1,20) (P2,15) (P3,20) (P4,10) (P5,15) (P6,20) (P7,25) (P8,10) 
+
+--- Intermediate Steps ---
+  [Depth 0] Dividing: left=0, mid=3, right=7
+  [Depth 1] Dividing: left=0, mid=1, right=3
+  [Depth 2] Dividing: left=0, mid=0, right=1
+  [Depth 2] After merge [0..1]: (P2,15) (P1,20) 
+  [Depth 2] Dividing: left=2, mid=2, right=3
+  [Depth 2] After merge [2..3]: (P4,10) (P3,20) 
+  [Depth 1] After merge [0..3]: (P4,10) (P2,15) (P1,20) (P3,20) 
+  [Depth 1] Dividing: left=4, mid=5, right=7
+  [Depth 2] Dividing: left=4, mid=4, right=5
+  [Depth 2] After merge [4..5]: (P5,15) (P6,20) 
+  [Depth 2] Dividing: left=6, mid=6, right=7
+  [Depth 2] After merge [6..7]: (P8,10) (P7,25) 
+  [Depth 1] After merge [4..7]: (P8,10) (P5,15) (P6,20) (P7,25) 
+  [Depth 0] After merge [0..7]: (P4,10) (P8,10) (P2,15) (P5,15) (P1,20) (P3,20) (P6,20) (P7,25) 
+
+Final Sorted (Merge Sort): (P4,10) (P8,10) (P2,15) (P5,15) (P1,20) (P3,20) (P6,20) (P7,25) 
+Total comparisons (approx): 16
+Note: Merge Sort is STABLE - equal weights retain original relative order.
+
+========== QUICK SORT ==========
+Initial: (P1,20) (P2,15) (P3,20) (P4,10) (P5,15) (P6,20) (P7,25) (P8,10) 
+
+--- Intermediate Steps (Partitions) ---
+  Partitioning [0..7], Pivot = (P8,10)
+  After partition: (P8,10) (P2,15) (P3,20) (P4,10) (P5,15) (P6,20) (P7,25) (P1,20)  | Pivot index = 0
+  [Depth 0] Recurse left of pivot 0, then right
+  Partitioning [1..7], Pivot = (P1,20)
+  After partition: (P2,15) (P4,10) (P5,15) (P1,20) (P6,20) (P7,25) (P3,20)  | Pivot index = 4
+  [Depth 1] Recurse left of pivot 4, then right
+  Partitioning [1..3], Pivot = (P5,15)
+  After partition: (P4,10) (P5,15) (P2,15)  | Pivot index = 2
+  [Depth 2] Recurse left of pivot 2, then right
+  Partitioning [5..7], Pivot = (P3,20)
+  After partition: (P3,20) (P7,25) (P6,20)  | Pivot index = 5
+  [Depth 2] Recurse left of pivot 5, then right
+  Partitioning [6..7], Pivot = (P6,20)
+  After partition: (P6,20) (P7,25)  | Pivot index = 6
+  [Depth 3] Recurse left of pivot 6, then right
+
+Final Sorted (Quick Sort): (P8,10) (P4,10) (P5,15) (P2,15) (P1,20) (P3,20) (P6,20) (P7,25) 
+Total comparisons (approx): 18
+Total swaps: 8
+Note: Standard Quick Sort is UNSTABLE - equal weights may change order.
+
+========== STABILITY VERIFICATION (Part b) ==========
+Original order of packages with equal weights:
+  Weight 10: P4 then P8
+  Weight 15: P2 then P5
+  Weight 20: P1 then P3 then P6
+  Weight 25: P7
+
+  [Depth 0] Dividing: left=0, mid=3, right=7
+  [Depth 1] Dividing: left=0, mid=1, right=3
+  [Depth 2] Dividing: left=0, mid=0, right=1
+  [Depth 2] After merge [0..1]: (P2,15) (P1,20) 
+  [Depth 2] Dividing: left=2, mid=2, right=3
+  [Depth 2] After merge [2..3]: (P4,10) (P3,20) 
+  [Depth 1] After merge [0..3]: (P4,10) (P2,15) (P1,20) (P3,20) 
+  [Depth 1] Dividing: left=4, mid=5, right=7
+  [Depth 2] Dividing: left=4, mid=4, right=5
+  [Depth 2] After merge [4..5]: (P5,15) (P6,20) 
+  [Depth 2] Dividing: left=6, mid=6, right=7
+  [Depth 2] After merge [6..7]: (P8,10) (P7,25) 
+  [Depth 1] After merge [4..7]: (P8,10) (P5,15) (P6,20) (P7,25) 
+  [Depth 0] After merge [0..7]: (P4,10) (P8,10) (P2,15) (P5,15) (P1,20) (P3,20) (P6,20) (P7,25) 
+After Stable Merge Sort: (P4,10) (P8,10) (P2,15) (P5,15) (P1,20) (P3,20) (P6,20) (P7,25) 
+
+Verification of relative order for equal weights:
+  First weight 10: P4 (expected P4)
+  Second weight 10: P8 (expected P8)
+  First weight 15: P2 (expected P2)
+  Second weight 15: P5 (expected P5)
+  First weight 20: P1 (expected P1)
+  Second weight 20: P3 (expected P3)
+  Third weight 20: P6 (expected P6)
+
+Merge Sort successfully preserves original relative order (STABLE).
+
+====================================================
+  Execution Complete. See ANALYSIS.txt for detailed analysis.
+====================================================
